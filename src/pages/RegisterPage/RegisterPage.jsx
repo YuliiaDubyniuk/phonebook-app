@@ -4,7 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearAuthError, registerThunk } from 'redux/authSlice';
 import { toast } from 'react-toastify';
 import { selectAuthError } from 'redux/authSelectors';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import css from './RegisterPage.module.css';
+
+const schema = yup
+  .object({
+    email: yup.string().required().email(),
+    password: yup.string().min(8).max(15).required(),
+  })
+  .required()
 
 const RegisterPage = () => {
   const {
@@ -12,7 +21,9 @@ const RegisterPage = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const dispatch = useDispatch();
   const error = useSelector(selectAuthError);
 
@@ -34,54 +45,36 @@ const RegisterPage = () => {
         <span className={css.registerSpan}>Email:</span>
         <input
           id="userEmail"
+          type= 'email'
           placeholder="Enter your email"
           className={css.registerInput}
-          {...register('email', {
-            required: true,
-            type: 'email',
-            pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$',
-          })}
+          {...register('email')}
         />
-        {errors.email && (
-          <span className={css.error}>
-            This field is required. Example: myemail@mail.com
-          </span>
-        )}
+        {<p className={css.error}>{errors.email?.message}</p>}
       </label>
       <label>
         <span className={css.registerSpan}>Name:</span>
         <input
           id="userName"
+          type= 'text'
           placeholder="Enter your name or nickname"
           className={css.registerInput}
-          {...register('name', { required: true, type: 'text', minLength: 4 })}
+          {...register('name')}
         />
-        {errors.name && (
-          <span className={css.error}>
-            This field is required. Must contain at least 4 symbols.
-          </span>
-        )}
+        {<p className={css.error}>{errors.password?.message}</p>}
       </label>
       <label>
         <span className={css.registerSpan}>Password:</span>
         <input
           id="userName"
+          type= "password"
           placeholder="Create unique password"
           className={css.registerInput}
-          {...register('password', {
-            required: true,
-            type: 'password',
-            pattern: '(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
-          })}
+          autoComplete="off"
+          {...register('password')}
         />
-        {errors.password && (
-          <span className={css.error}>
-            This field is required. Must contain at least one number and one
-            uppercase and lowercase letter, and at least 8 or more characters.
-          </span>
-        )}
+        {<p className={css.error}>{errors.password?.message}</p>}
       </label>
-
       <button className={css.registerBtn} type="submit">
         Sign Up
       </button>

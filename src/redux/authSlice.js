@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
+  removeToken,
   requestLogin,
   requestLogout,
   requestRegister,
@@ -59,7 +60,6 @@ export const refreshThunk = createAsyncThunk(
     condition: (_, thunkAPI) => {
       const state = thunkAPI.getState();
       const token = state.auth.token;
-
       if (!token) return false;
       return true;
     },
@@ -71,6 +71,7 @@ export const logoutThunk = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       await requestLogout();
+      removeToken();
       return;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

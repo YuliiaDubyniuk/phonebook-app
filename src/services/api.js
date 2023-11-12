@@ -8,6 +8,10 @@ export const setToken = (token) => {
    phoneBookInstance.defaults.headers.common.Authorization = `Bearer ${token}`
 }
 
+export const removeToken = () => {
+  phoneBookInstance.defaults.headers.common.Authorization = '';
+};
+
 export const requestRegister = async (contactData) => {
   const { data } = await phoneBookInstance.post('/users/signup', contactData);
   setToken(data.token)

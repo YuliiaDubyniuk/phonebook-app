@@ -3,7 +3,16 @@ import { useForm } from 'react-hook-form';
 import { addContact } from 'redux/contactsSlice';
 import { selectAllContacts } from 'redux/contactsSelectors';
 import { toast } from 'react-toastify';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import css from './Form.module.css';
+
+const schema = yup
+  .object({
+    name: yup.string().required().min(4),
+    number: yup.string().min(8).required(),
+  })
+  .required()
 
 export const Form = () => {
   const {
@@ -11,7 +20,9 @@ export const Form = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const dispatch = useDispatch();
   const contactList = useSelector(selectAllContacts);
   const onSubmit = contact => {
@@ -36,18 +47,9 @@ export const Form = () => {
           id="contactName"
           placeholder="Enter contact name"
           className={css.contactInput}
-          {...register('name', {
-            required: true,
-            pattern: "^[A-Za-z\u0080-\uFFFF ']+$",
-            type: 'text',
-          })}
+          {...register('name', {type: "text"})}
         />
-        {errors.name && (
-          <span className={css.error}>
-            This field is required. It may contain only letters, apostrophe,
-            dash and spaces.
-          </span>
-        )}
+        {<p className={css.error}>{errors.name?.message}</p>}
       </label>
       <label className={css.label}>
         <span className={css.contactSpan}>Phone:</span>
@@ -55,18 +57,9 @@ export const Form = () => {
           id="contactPhone"
           className={css.contactInput}
           placeholder="Enter phone number"
-          {...register('number', {
-            required: true,
-            pattern: '^(+?[0-9.()-s]*)$',
-            type: 'text',
-          })}
+          {...register('number', {type: "tel"})}
         />
-        {errors.number && (
-          <span className={css.error}>
-            This field is required. It can contain digits, spaces, dashes,
-            parentheses and can starts with +
-          </span>
-        )}
+        {<p className={css.error}>{errors.number?.message}</p>}
       </label>
       <button className={css.formBtn} type="submit">
         Add contact
