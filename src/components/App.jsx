@@ -1,31 +1,65 @@
-import { Form } from './Form/Form';
-import { Contacts } from './Contacts/Contacts';
-import { SearchField } from './SearchField/SearchField';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectError, selectIsLoading } from 'redux/selectors';
-import { useEffect } from 'react';
-import { fetchContacts } from 'redux/contactsSlice';
+import { Route, Routes } from 'react-router-dom';
+import { Suspense, lazy, useEffect } from 'react';
 import { Loader } from './Loader/Loader';
-import { ErrorMessage } from './ErrorMessage/ErrorMessage';
+import { Header } from './Header/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import { refreshThunk } from 'redux/authSlice';
+import RestrictedRoute from './routes/RestrictedRoute';
+import PrivateRoute from './routes/PrivateRoute';
+import { selectAuthIsLoading } from 'redux/authSelectors';
+
+const HomePage = lazy(() => import('pages/HomePage/HomePage'));
+const RegisterPage = lazy(() => import('pages/RegisterPage/RegisterPage'));
+const LoginPage = lazy(() => import('pages/LoginPage/LoginPage'));
+const ContactsPage = lazy(() => import('pages/ContactPage/ContactsPage'));
+
+const appRoutes = [
+  { path: '/', element: <HomePage /> },
+  {
+    path: '/register',
+    element: (
+      <RestrictedRoute>
+        <RegisterPage />
+      </RestrictedRoute>
+    ),
+  },
+  {
+    path: '/login',
+    element: (
+      <RestrictedRoute>
+        <LoginPage />
+      </RestrictedRoute>
+    ),
+  },
+  {
+    path: '/contacts',
+    element: (
+      <PrivateRoute>
+        <ContactsPage />
+      </PrivateRoute>
+    ),
+  },
+];
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
-  
+  const isRefreshing = useSelector(selectAuthIsLoading);
+
   useEffect(() => {
-    dispatch(fetchContacts())
+    dispatch(refreshThunk());
   }, [dispatch]);
 
-return (
-    <div>
-      <h1>Phonebook</h1>
-      <Form/>
-      <h2>Contacts</h2>
-      <SearchField />
-      {isLoading && <Loader />}
-      {error && <ErrorMessage message={error} />}
-      <Contacts/>
-    </div>
-  )
-}
+  return (
+    <>
+      <Header />
+      {isRefreshing ? (<Loader />) :
+        (<Suspense fallback={<Loader />}>
+          <Routes>
+            {appRoutes.map(({ path, element }) => (
+              <Route key={path} path={path} element={element} />
+            ))}
+          </Routes>
+        </Suspense>)}
+    </>
+  );
+};

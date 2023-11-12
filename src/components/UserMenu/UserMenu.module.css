@@ -1,0 +1,25 @@
+.userMenu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.userName{
+    color: #97c10d;
+    font-weight: 500;
+}
+
+.logOutBtn{
+    padding: 5px;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #97c10d;
+    border: none;
+    border-radius: 6px;
+    transition: scale ease-in-out 250ms;
+}
+
+.logOutBtn:hover{
+    scale: 1.1
+}

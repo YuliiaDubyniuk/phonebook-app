@@ -1,0 +1,74 @@
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  padding: 20px;
+  width: 400px;
+  border-radius: 6px;
+  background: rgb(151, 193, 13, 0.4);
+box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+            rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+            rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.title {
+    text-align: center;
+    color: #171241;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+}
+
+.registerInput {
+  max-width: 100%;
+  padding: 7px;
+  font-size: 20px;
+  background-color: beige;
+  outline: none;
+  border: 3px solid beige;
+  border-radius: 4px;
+  
+}
+
+.registerInput:focus {
+border: 3px solid #171241;
+}
+
+.registerInput::placeholder {
+  font-size: 16px;
+}
+
+.error {
+  font-size: 14px;
+  font-weight: 400;
+  color: red;
+}
+
+.registerSpan {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.registerBtn {
+  padding: 8px 12px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  font-weight: 700;
+  font-size: 16px;
+  background-color: #171241;
+  border-radius: 4px;
+  color: #97c10d;
+  transition: scale ease-in-out 250ms;
+}
+
+.registerBtn:hover,
+.registerBtn:focus {
+scale:1.05;
+}

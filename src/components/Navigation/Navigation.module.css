@@ -1,0 +1,24 @@
+nav {
+    display: flex;
+    align-items: baseline;
+    gap: 30px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.logo {
+    font-size: 34px;
+    font-weight: 700;
+    padding: 20px 0;
+    text-shadow: -1px 1px 0 #41ba45, 1px 1px 0 #c63d2b, 1px -1px 0 #42afac,
+        -1px -1px 0 #c6c23f;
+}
+
+.contacts {
+    font-size: 20px;
+    font-weight: 500;
+    color: #97c10d;
+}

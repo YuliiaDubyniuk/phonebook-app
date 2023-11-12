@@ -1,0 +1,21 @@
+.authMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.authLink {
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #97c10d;
+}
+
+.authLink:hover {
+    border-bottom: 2px solid #97c10d;
+}
+
+.authLink.active {
+    border-bottom: 2px solid #97c10d;
+}

@@ -1,53 +1,72 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { addContact } from 'redux/contactsSlice';
-import { selectContacts } from 'redux/selectors';
+import { selectAllContacts } from 'redux/contactsSelectors';
+import { toast } from 'react-toastify';
 import css from './Form.module.css';
 
-export const Form = () => { 
+export const Form = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const dispatch = useDispatch();
-  const contactsList = useSelector(selectContacts);
-
-  const handleSubmit = evt => {
-    evt.preventDefault();    
-    const name = evt.currentTarget.elements.name.value;
-    const phone = evt.currentTarget.elements.number.value;
-    const newContact = {
-      name,
-      phone,
-    };
-
-    contactsList.some(
-      contact =>
-        contact.name.toLowerCase().trim() ===
-        newContact.name.toLowerCase().trim()
-    )
-      ? alert(`${newContact.name} is already in contacts.`)
-      : dispatch(addContact(newContact));
-    
-    evt.currentTarget.reset();
+  const contactList = useSelector(selectAllContacts);
+  const onSubmit = contact => {
+    if (
+      contactList.some(
+        item => item.name === contact.name || item.number === contact.number
+      )
+    ) {
+      toast.warning('This contact has already been added.');
+      return;
+    }
+    dispatch(addContact(contact));
+    reset();
   };
 
   return (
-    <form className={css.form} onSubmit={handleSubmit}>
+    <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
+      <h2 className={css.title}>Add new contact</h2>
       <label className={css.label}>
-        Name
+        <span className={css.contactSpan}>Name:</span>
         <input
-          className={css.inputLabel}
-          type="text"
-          name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          required
+          id="contactName"
+          placeholder="Enter contact name"
+          className={css.contactInput}
+          {...register('name', {
+            required: true,
+            pattern: "^[A-Za-z\u0080-\uFFFF ']+$",
+            type: 'text',
+          })}
         />
+        {errors.name && (
+          <span className={css.error}>
+            This field is required. It may contain only letters, apostrophe,
+            dash and spaces.
+          </span>
+        )}
       </label>
       <label className={css.label}>
-        Number
+        <span className={css.contactSpan}>Phone:</span>
         <input
-          className={css.inputLabel}
-          type="tel"
-          name="number"
-          pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
-          required
+          id="contactPhone"
+          className={css.contactInput}
+          placeholder="Enter phone number"
+          {...register('number', {
+            required: true,
+            pattern: '^(+?[0-9.()-s]*)$',
+            type: 'text',
+          })}
         />
+        {errors.number && (
+          <span className={css.error}>
+            This field is required. It can contain digits, spaces, dashes,
+            parentheses and can starts with +
+          </span>
+        )}
       </label>
       <button className={css.formBtn} type="submit">
         Add contact

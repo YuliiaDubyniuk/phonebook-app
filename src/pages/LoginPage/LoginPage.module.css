@@ -1,14 +1,17 @@
-.form {
+.loginForm {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 30px;
-  padding: 10px 20px;
-  width: 400px;
-  height: max-content;
+  gap: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  padding: 20px;
+  max-width: 400px;
   border-radius: 6px;
   background: rgb(151, 193, 13, 0.4);
-  border: 2px solid #171241;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
 .title{
@@ -16,43 +19,42 @@
   color: #171241;
 }
 
-.label {
+label {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
 }
 
-.contactInput {
+.loginInput {
   max-width: 100%;
-  padding: 5px;
+  padding: 7px;
   font-size: 20px;
   background-color: beige;
   outline: none;
   border-radius: 4px;
-  border: 2px solid beige;
+  border: 3px solid beige;
 }
 
-.contactInput:focus {
-  border: 2px solid #171241;
+.loginInput:focus {
+  border: 3px solid #171241;
 }
 
-.contactInput::placeholder {
+.loginInput::placeholder {
   font-size: 16px;
 }
 
-.contactSpan {
+.loginSpan {
   display: inline-block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-weight: 500;
 }
 
-.error{
+.error {
   font-size: 14px;
   font-weight: 400;
   color: red;
 }
 
-.formBtn {
+.loginBtn {
   padding: 8px 12px;
   margin-left: auto;
   margin-right: auto;
@@ -65,7 +67,7 @@
   transition: scale ease-in-out 250ms;
 }
 
-.formBtn:hover,
-.formBtn:focus {
+.loginBtn:hover,
+.loginBtn:focus {
   scale: 1.05;
 }

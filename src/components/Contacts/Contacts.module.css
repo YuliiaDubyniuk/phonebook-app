@@ -1,0 +1,13 @@
+.contactsList {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 2px solid #171241;
+  background: rgb(151, 193, 13, 0.4);
+  list-style: none;
+}
+
+.contactText{
+  font-size: 18px;
+  font-weight: 500;
+  padding-left: 10px;
+}
