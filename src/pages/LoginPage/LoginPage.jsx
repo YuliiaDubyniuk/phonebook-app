@@ -46,7 +46,6 @@ const LoginPage = () => {
         <input
           className={css.loginInput}
           type= "email"
-          id="userEmail"
           placeholder="Enter your email"
           {...register('email')}
         />
@@ -57,7 +56,6 @@ const LoginPage = () => {
         <input
           className={css.loginInput}
           type= "password"
-          id="userPassword"
           placeholder="Enter your password"
           autoComplete="off"
           {...register('password')}

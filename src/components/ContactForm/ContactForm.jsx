@@ -5,7 +5,7 @@ import { selectAllContacts } from 'redux/contactsSelectors';
 import { toast } from 'react-toastify';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import css from './Form.module.css';
+import css from './ContactForm.module.css';
 
 const schema = yup
   .object({
@@ -44,7 +44,6 @@ export const Form = () => {
       <label className={css.label}>
         <span className={css.contactSpan}>Name:</span>
         <input
-          id="contactName"
           placeholder="Enter contact name"
           className={css.contactInput}
           {...register('name', {type: "text"})}
@@ -54,7 +53,6 @@ export const Form = () => {
       <label className={css.label}>
         <span className={css.contactSpan}>Phone:</span>
         <input
-          id="contactPhone"
           className={css.contactInput}
           placeholder="Enter phone number"
           {...register('number', {type: "tel"})}

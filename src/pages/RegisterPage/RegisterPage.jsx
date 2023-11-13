@@ -44,7 +44,6 @@ const RegisterPage = () => {
       <label>
         <span className={css.registerSpan}>Email:</span>
         <input
-          id="userEmail"
           type= 'email'
           placeholder="Enter your email"
           className={css.registerInput}
@@ -55,7 +54,6 @@ const RegisterPage = () => {
       <label>
         <span className={css.registerSpan}>Name:</span>
         <input
-          id="userName"
           type= 'text'
           placeholder="Enter your name or nickname"
           className={css.registerInput}
@@ -66,7 +64,6 @@ const RegisterPage = () => {
       <label>
         <span className={css.registerSpan}>Password:</span>
         <input
-          id="userName"
           type= "password"
           placeholder="Create unique password"
           className={css.registerInput}

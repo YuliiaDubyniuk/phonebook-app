@@ -1,5 +1,5 @@
 import { Contacts } from 'components/Contacts/Contacts';
-import { Form } from 'components/Form/Form';
+import { ContactForm } from 'components/ContactForm/ContactForm';
 import { SearchField } from 'components/SearchField/SearchField';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +17,7 @@ const ContactsPage = () => {
 
   return (
     <div className={css.contactsPage}>
-      <Form />
+      <ContactForm />
       <div className={css.contactsWrap}>
         <SearchField />
         {isLoading && <p className={css.load}>Loading...</p> }
