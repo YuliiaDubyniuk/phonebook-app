@@ -14,7 +14,7 @@ const schema = yup
   })
   .required()
 
-export const Form = () => {
+export const ContactForm = () => {
   const {
     register,
     handleSubmit,
