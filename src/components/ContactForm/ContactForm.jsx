@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { addContact } from 'redux/contactsSlice';
 import { selectAllContacts } from 'redux/contactsSelectors';
 import { toast } from 'react-toastify';
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import css from './ContactForm.module.css';
 
 const schema = yup
@@ -12,7 +12,7 @@ const schema = yup
     name: yup.string().required().min(4),
     number: yup.string().min(8).required(),
   })
-  .required()
+  .required();
 
 export const ContactForm = () => {
   const {
@@ -28,7 +28,10 @@ export const ContactForm = () => {
   const onSubmit = contact => {
     if (
       contactList.some(
-        item => item.name === contact.name || item.number === contact.number
+        item =>
+          item.name.toLowerCase().trim() ===
+            contact.name.toLowerCase().trim() ||
+          item.number.trim() === contact.number.trim()
       )
     ) {
       toast.warning('This contact has already been added.');
@@ -46,7 +49,7 @@ export const ContactForm = () => {
         <input
           placeholder="Enter contact name"
           className={css.contactInput}
-          {...register('name', {type: "text"})}
+          {...register('name', { type: 'text' })}
         />
         {<p className={css.error}>{errors.name?.message}</p>}
       </label>
@@ -55,7 +58,7 @@ export const ContactForm = () => {
         <input
           className={css.contactInput}
           placeholder="Enter phone number"
-          {...register('number', {type: "tel"})}
+          {...register('number', { type: 'tel' })}
         />
         {<p className={css.error}>{errors.number?.message}</p>}
       </label>

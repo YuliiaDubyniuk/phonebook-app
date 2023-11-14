@@ -11,6 +11,7 @@ import css from './RegisterPage.module.css';
 const schema = yup
   .object({
     email: yup.string().required().email(),
+    name: yup.string().required().min(4).max(15),
     password: yup.string().min(8).max(15).required(),
   })
   .required()
@@ -59,7 +60,7 @@ const RegisterPage = () => {
           className={css.registerInput}
           {...register('name')}
         />
-        {<p className={css.error}>{errors.password?.message}</p>}
+        {<p className={css.error}>{errors.name?.message}</p>}
       </label>
       <label>
         <span className={css.registerSpan}>Password:</span>
