@@ -20,6 +20,7 @@ export const requestRegister = async (contactData) => {
 
 export const requestLogin = async (contactData) => {
   const { data } = await phoneBookInstance.post('/users/login', contactData);
+  setToken(data.token)
   return data;
 };
 
